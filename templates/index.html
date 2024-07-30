@@ -8,7 +8,7 @@
 </form>
 <ul>
     {% for board in boards %}
-    <li>{{ board.name }}</li>
+    <li><a href="{{ url_for('main.board', board_id=board._id) }}">{{ board.name }}</a></li>
     {% endfor %}
 </ul>
 {% endblock %}
