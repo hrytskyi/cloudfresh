@@ -4,10 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kanban Board</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .kanban-board {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .kanban-column {
+            width: 23%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+        }
+
+        .kanban-column#backlog { background-color: #f8d7da; }
+        .kanban-column#work { background-color: #fff3cd; }
+        .kanban-column#review { background-color: #d1ecf1; }
+        .kanban-column#done { background-color: #d4edda; }
+
+        .kanban-column h2 {
+            text-align: center;
+            color: #495057;
+        }
+
+        .kanban-column ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .kanban-column ul li {
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,.2);
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         {% block content %}{% endblock %}
     </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
