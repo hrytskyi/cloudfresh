@@ -10,8 +10,8 @@ def get_boards():
 def get_board(board_id):
     return app.db.boards.find_one({"_id": ObjectId(board_id)})
 
-def add_task(board_id, task_name):
+def add_task(board_id, task_name, task_status='Backlog'):
     app.db.boards.update_one(
         {"_id": ObjectId(board_id)},
-        {"$push": {"tasks": {"name": task_name, "status": "To Do"}}}
+        {"$push": {"tasks": {"name": task_name, "status": task_status}}}
     )

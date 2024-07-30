@@ -22,5 +22,6 @@ def create_board_route():
 @main.route('/board/<board_id>/add_task', methods=['POST'])
 def add_task_route(board_id):
     task_name = request.form.get('task_name')
-    add_task(board_id, task_name)
+    task_status = request.form.get('task_status', 'Backlog')
+    add_task(board_id, task_name, task_status)
     return redirect(url_for('main.board', board_id=board_id))

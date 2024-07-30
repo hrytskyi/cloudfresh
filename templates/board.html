@@ -4,13 +4,68 @@
 <h1>{{ board.name }}</h1>
 <form action="{{ url_for('main.add_task_route', board_id=board._id) }}" method="POST">
     <input type="text" name="task_name" placeholder="Enter task name">
+    <select name="task_status">
+        <option value="Backlog">Backlog</option>
+        <option value="Work">Work</option>
+        <option value="Review">Review</option>
+        <option value="Done">Done</option>
+    </select>
     <button type="submit">Add Task</button>
 </form>
-<h2>Tasks</h2>
-<ul>
-    {% for task in board.tasks %}
-    <li>{{ task.name }} - {{ task.status }}</li>
-    {% endfor %}
-</ul>
+
+<div class="kanban-board">
+    <div class="kanban-column" id="backlog">
+        <h2>Backlog</h2>
+        <ul>
+            {% for task in board.tasks if task.status == 'Backlog' %}
+            <li>{{ task.name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="kanban-column" id="work">
+        <h2>Work</h2>
+        <ul>
+            {% for task in board.tasks if task.status == 'Work' %}
+            <li>{{ task.name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="kanban-column" id="review">
+        <h2>Review</h2>
+        <ul>
+            {% for task in board.tasks if task.status == 'Review' %}
+            <li>{{ task.name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="kanban-column" id="done">
+        <h2>Done</h2>
+        <ul>
+            {% for task in board.tasks if task.status == 'Done' %}
+            <li>{{ task.name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
 <a href="{{ url_for('main.index') }}">Back to boards</a>
 {% endblock %}
+
+<style>
+    .kanban-board {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .kanban-column {
+        width: 23%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .kanban-column#backlog { background-color: #f8d7da; }
+    .kanban-column#work { background-color: #fff3cd; }
+    .kanban-column#review { background-color: #d1ecf1; }
+    .kanban-column#done { background-color: #d4edda; }
+</style>
