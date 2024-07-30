@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from app.models import create_board, get_boards, get_board, add_task
+from app.models import create_board, get_boards, get_board, add_task, delete_board, delete_task
 
 main = Blueprint('main', __name__)
 
@@ -19,9 +19,19 @@ def create_board_route():
     create_board(board_name)
     return redirect(url_for('main.index'))
 
+@main.route('/delete_board/<board_id>', methods=['POST'])
+def delete_board_route(board_id):
+    delete_board(board_id)
+    return redirect(url_for('main.index'))
+
 @main.route('/board/<board_id>/add_task', methods=['POST'])
 def add_task_route(board_id):
     task_name = request.form.get('task_name')
     task_status = request.form.get('task_status', 'Backlog')
     add_task(board_id, task_name, task_status)
+    return redirect(url_for('main.board', board_id=board_id))
+
+@main.route('/board/<board_id>/delete_task/<task_id>', methods=['POST'])
+def delete_task_route(board_id, task_id):
+    delete_task(board_id, task_id)
     return redirect(url_for('main.board', board_id=board_id))
