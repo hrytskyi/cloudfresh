@@ -26,7 +26,17 @@ jobs:
     - name: Run tests
       continue-on-error: true
       run: |
-        pytest
+        pytest --cov=app --cov-report=xml
+
+    - name: Install Code Climate CLI
+      run: |
+        npm install -g codeclimate-test-reporter
+
+    - name: Upload coverage to Code Climate
+      run: |
+        codeclimate-test-reporter < coverage.xml
+      env:
+        CODECLIMATE_REPO_TOKEN: ${{ secrets.CODECLIMATE_REPO_TOKEN }}
 
   deploy:
     needs: test
@@ -55,7 +65,7 @@ jobs:
       run: |
         gcloud run deploy kanban-board --image ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/cloudfresh-registry/kanban-board:latest --platform managed --region ${{ secrets.GCP_REGION }} --allow-unauthenticated
 
-  sonarqube:
+  codeclimate:
     needs: deploy
     runs-on: ubuntu-latest
 
@@ -63,21 +73,12 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Java
-      uses: actions/setup-java@v2
-      with:
-        distribution: 'adopt'  # або 'zulu' або інша підтримувана дистрибуція
-        java-version: 11
-
-    - name: Install SonarQube Scanner CLI
+    - name: Install Code Climate CLI
       run: |
-        npm install -g sonar-scanner-cli || true
-        which sonar-scanner-cli || true
-        ls -l $(npm root -g)/sonar-scanner-cli || true
+        npm install -g codeclimate-test-reporter
 
-    - name: Run SonarQube Scanner
+    - name: Upload coverage to Code Climate
+      run: |
+        codeclimate-test-reporter < coverage.xml
       env:
-        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: |
-        sonar-scanner-cli
+        CODECLIMATE_REPO_TOKEN: ${{ secrets.CODECLIMATE_REPO_TOKEN }}
