@@ -56,15 +56,26 @@ jobs:
         gcloud run deploy kanban-board --image ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/cloudfresh-registry/kanban-board:latest --platform managed --region ${{ secrets.GCP_REGION }} --allow-unauthenticated
 
   sonarqube:
+    needs: test
     runs-on: ubuntu-latest
-    needs: deploy
-    name: Build and analyze
-    
+
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Java
+      uses: actions/setup-java@v2
       with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-    - uses: sonarsource/sonarqube-scan-action@master
+        java-version: '11'
+
+    - name: Install SonarQube Scanner
+      run: |
+        npm install -g sonarqube-scanner
+
+    - name: Run SonarQube Scanner
       env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: |
+        sonarqube-scanner
+
