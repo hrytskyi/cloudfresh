@@ -23,20 +23,28 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Run tests
-      continue-on-error: true
+    - name: Run tests with coverage
       run: |
-        pytest --cov=app --cov-report=xml
+        coverage run -m pytest
+        coverage xml -o coverage.xml
 
-    - name: Install Code Climate CLI
-      run: |
-        npm install -g codeclimate-test-reporter
+  codacy:
+    needs: test
+    runs-on: ubuntu-latest
 
-    - name: Upload coverage to Code Climate
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install Codacy Reporter
       run: |
-        codeclimate-test-reporter < coverage.xml
+        pip install codacy-coverage
+
+    - name: Run Codacy Coverage
       env:
-        CODECLIMATE_REPO_TOKEN: ${{ secrets.CODECLIMATE_REPO_TOKEN }}
+        CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      run: |
+        codacy-coverage -r coverage.xml -t $CODACY_PROJECT_TOKEN
 
   deploy:
     needs: test
@@ -65,20 +73,3 @@ jobs:
       run: |
         gcloud run deploy kanban-board --image ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/cloudfresh-registry/kanban-board:latest --platform managed --region ${{ secrets.GCP_REGION }} --allow-unauthenticated
 
-  codeclimate:
-    needs: deploy
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Install Code Climate CLI
-      run: |
-        npm install -g codeclimate-test-reporter
-
-    - name: Upload coverage to Code Climate
-      run: |
-        codeclimate-test-reporter < coverage.xml
-      env:
-        CODECLIMATE_REPO_TOKEN: ${{ secrets.CODECLIMATE_REPO_TOKEN }}
