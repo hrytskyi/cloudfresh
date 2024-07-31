@@ -69,14 +69,15 @@ jobs:
         distribution: 'adopt'  # або 'zulu' або інша підтримувана дистрибуція
         java-version: 11
 
-    - name: Install SonarQube Scanner
+    - name: Install SonarQube Scanner CLI
       run: |
-        npm install -g sonarqube-scanner
-        which sonarqube-scanner
+        npm install -g sonar-scanner-cli || true
+        which sonar-scanner-cli || true
+        ls -l $(npm root -g)/sonar-scanner-cli || true
 
     - name: Run SonarQube Scanner
       env:
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
-        npx sonarqube-scanner
+        sonar-scanner-cli
