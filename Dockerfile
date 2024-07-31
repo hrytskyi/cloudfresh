@@ -1,5 +1,5 @@
 # Вказуємо базовий образ
-FROM python:3.8-slim
+FROM python:3.12-slim
 
 # Встановлюємо залежності для системи
 RUN apt-get update && apt-get install -y \
