@@ -12,6 +12,8 @@ RUN pip install --upgrade pip
 # Встановлюємо залежності
 COPY requirements.txt .
 RUN pip install -r requirements.txt
+RUN pip install --upgrade flask werkzeug
+
 
 # Копіюємо файли застосунку
 COPY . /app
