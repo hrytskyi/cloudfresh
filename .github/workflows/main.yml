@@ -56,7 +56,7 @@ jobs:
         gcloud run deploy kanban-board --image ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/cloudfresh-registry/kanban-board:latest --platform managed --region ${{ secrets.GCP_REGION }} --allow-unauthenticated
 
   sonarqube:
-    needs: test
+    needs: deploy
     runs-on: ubuntu-latest
 
     steps:
