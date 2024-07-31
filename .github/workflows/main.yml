@@ -42,6 +42,7 @@ jobs:
         pip install codacy-coverage
 
     - name: Run Codacy Coverage
+      continue-on-error: true
       env:
         CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
       run: |
