@@ -101,10 +101,13 @@ Assess basic networking knowledge.
 1.  **Verify connectivity**:
     
     -   We can verify that public VMs can communicate with each other, but can't reach private VMs. The same is with private VMs: they can communicate, but cant access public VMs.
+
 test-vm-1:
+
 ![Screenshot 2024-07-30 113736](https://github.com/user-attachments/assets/3e6b65b3-2579-4ee6-ab48-53bda16da568)
 
 test-vm-2:
+
 ![Screenshot 2024-07-30 113834](https://github.com/user-attachments/assets/8e2b7877-921b-4e5e-8385-053c4f24b736)
 
 ## Conclusion
