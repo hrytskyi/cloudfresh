@@ -18,7 +18,8 @@ Demonstrate the ability to set up a CI/CD pipeline.
 1.  **Create Flask Web Application**
     
     The web application is a simple Kanban board application. MongoDB Atlas free tier is used for storing data
-    < images to demonstrate web app >
+![main page](https://photos.app.goo.gl/5mSA1WJQWBPvAHLc9)
+![board page](https://photos.app.goo.gl/NS4Fq8hdP9LFkdZ59)
 
 2.  **Set Up GitHub Actions CI/CD Pipeline**
 
@@ -34,7 +35,7 @@ on:
 
 jobs:
 ```
-Then, we define our first job "test". That job is meant to set up python with dependencies, defined in our app and then run test simulations, also that we created. Even if our tests is not 100% successful we would anyway go to the next job.
+Then, we define our first job "test". That job is meant to set up python with dependencies, defined in our app, and then run test simulations, also that we created. Even if our tests is not 100% successful we would anyway go to the next job.
 ```
   test:
     runs-on: ubuntu-latest
@@ -99,12 +100,12 @@ Implement basic security measures in the application.
     
     -   Add secrets to GitHub repository secrets.
     -   Use these secrets in our CI/CD pipeline.
-
-< images of github secrets >
+![GitHub Action secrets](https://photos.app.goo.gl/xmBwWx6ysYMqAjxn7)
 
 2.  **Configure HTTPS for Secure Communication:**
     
     -   GCP Cloud Run automatically provides HTTPS for your services. No additional configuration needed.
+![Cloud Run console](https://photos.app.goo.gl/6cfSzsMbNFrhAL6a6)
 
 3.  **Perform Static Code Analysis using Codacy:**
     
@@ -134,5 +135,5 @@ Our last pipeline job is static code analysis tool Codacy integration. I've chos
         coverage-reports: coverage.xml
 ```
 
-< photo of codacy analyzer >
+![Codacy](https://photos.app.goo.gl/8MQVs1RHtip7YbTE6)
  
