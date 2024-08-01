@@ -17,8 +17,8 @@ Demonstrate the ability to set up a CI/CD pipeline.
 #### Steps
 
 1.  **Create Flask Web Application**
-    
-    The web application is a simple Kanban board application. MongoDB Atlas free tier is used for storing data
+
+The web application is a simple Kanban board application. MongoDB Atlas free tier is used for storing data
 Main page:
 <img width="1142" alt="image" src="https://github.com/user-attachments/assets/6e5495c1-2206-4044-95c5-0bef88168902">
 Boards page:
