@@ -1,3 +1,4 @@
+Access the web page: https://kanban-board-ytgmlaf2yq-ew.a.run.app/
 ## Part 1: DevOps and DevSecOps
 
 ### 1.1. Setup a CI/CD Pipeline
@@ -18,10 +19,13 @@ Demonstrate the ability to set up a CI/CD pipeline.
 1.  **Create Flask Web Application**
     
     The web application is a simple Kanban board application. MongoDB Atlas free tier is used for storing data
-![main page](https://photos.app.goo.gl/5mSA1WJQWBPvAHLc9)
-![board page](https://photos.app.goo.gl/NS4Fq8hdP9LFkdZ59)
+Main page:
+<img width="1142" alt="image" src="https://github.com/user-attachments/assets/6e5495c1-2206-4044-95c5-0bef88168902">
+Boards page:
+<img width="1146" alt="image" src="https://github.com/user-attachments/assets/c0680438-d154-4d9c-9755-e01960719292">
 
-2.  **Set Up GitHub Actions CI/CD Pipeline**
+
+3.  **Set Up GitHub Actions CI/CD Pipeline**
 
 first of all, we give our pipeline a name("CI/CD Pipeline" in our case) and command it to start when new changes is pushed to our branch "task1"
 ```
@@ -100,12 +104,14 @@ Implement basic security measures in the application.
     
     -   Add secrets to GitHub repository secrets.
     -   Use these secrets in our CI/CD pipeline.
-![GitHub Action secrets](https://photos.app.goo.gl/xmBwWx6ysYMqAjxn7)
+<img width="781" alt="image" src="https://github.com/user-attachments/assets/b3c91cba-c712-4d9a-91bb-76823a2f33ef">
+
 
 2.  **Configure HTTPS for Secure Communication:**
     
     -   GCP Cloud Run automatically provides HTTPS for your services. No additional configuration needed.
-![Cloud Run console](https://photos.app.goo.gl/6cfSzsMbNFrhAL6a6)
+<img width="900" alt="image" src="https://github.com/user-attachments/assets/3cf0234b-03d4-44ae-adeb-0875a3de2856">
+
 
 3.  **Perform Static Code Analysis using Codacy:**
     
@@ -135,5 +141,6 @@ Our last pipeline job is static code analysis tool Codacy integration. I've chos
         coverage-reports: coverage.xml
 ```
 
-![Codacy](https://photos.app.goo.gl/8MQVs1RHtip7YbTE6)
+<img width="1791" alt="image" src="https://github.com/user-attachments/assets/8fb9d723-ea7f-4d57-af5e-e85d01504f5d">
+
  
