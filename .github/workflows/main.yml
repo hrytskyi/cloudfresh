@@ -23,30 +23,10 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Run tests with coverage
+    - name: Run tests
       continue-on-error: true
       run: |
-        coverage run -m pytest
-        coverage xml -o coverage.xml
-
-  codacy:
-    needs: test
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Install Codacy Reporter
-      run: |
-        pip install codacy-coverage
-
-    - name: Run Codacy Coverage
-      continue-on-error: true
-      env:
-        CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
-      run: |
-        codacy-coverage -r coverage.xml -t $CODACY_PROJECT_TOKEN
+        pytest
 
   deploy:
     needs: test
@@ -67,8 +47,11 @@ jobs:
         gcloud auth configure-docker ${{ secrets.GCP_REGION }}-docker.pkg.dev --quiet
 
     - name: Build and push Docker image
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
       run: |
-        docker build -t ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/cloudfresh-registry/kanban-board:latest .
+        docker build --build-arg MONGODB_URI=${{ secrets.MONGODB_URI }} --build-arg SECRET_KEY=${{ secrets.SECRET_KEY }} --build-arg DB_NAME=${{ secrets.DB_NAME }} -t ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/cloudfresh-registry/kanban-board:latest .
         docker push ${{ secrets.GCP_REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/cloudfresh-registry/kanban-board:latest
 
     - name: Deploy to GCP
