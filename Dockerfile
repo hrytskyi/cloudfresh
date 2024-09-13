@@ -14,13 +14,12 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 RUN pip install --upgrade flask werkzeug
 
-
 # Копіюємо файли застосунку
 COPY . /app
 WORKDIR /app
 
 # Встановлюємо змінні середовища
-ENV FLASK_APP=app.py
+ENV FLASK_APP=run.py
 ENV FLASK_RUN_HOST=0.0.0.0
 
 # Відкриваємо порт
